@@ -17,4 +17,9 @@ echo "Linked init.vim for Neovim"
 
 echo "Dotfiles installed successfully!"
 
-
+# Install Everforest color scheme
+mkdir -p ~/.vim/pack/colors/opt
+if [ ! -d ~/.vim/pack/colors/opt/everforest ]; then
+    git clone --depth 1 https://github.com/sainnhe/everforest.git ~/.vim/pack/colors/opt/everforest
+    echo "Installed Everforest color scheme"
+fi
