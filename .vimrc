@@ -1,29 +1,27 @@
-" --- Compatibility Layer ---
-" Make Neovim look into ~/.vim so it can find the packages we cloned
+" --- Path Fixes for Neovim ---
 if has('nvim')
-  set runtimepath+=~/.vim
+    " This fixes the E919 error by telling NVIM where the 'pack' folder is
+    set runtimepath+=~/.vim
+    set packpath+=~/.vim
+endif
+
+" --- Terminal Color Fix ---
+" This fixes the 'blue' issue in many terminals
+if (has("termguicolors"))
+    set termguicolors
 endif
 
 " --- Theme Configuration ---
 if has('nvim')
-    " 1. Load the Neovim-specific package
+    " Load Neovim version
     packadd! onedark-nvim
-    
-    " 2. Use Lua to configure the 'darker' variant
     lua << EOF
-    require('onedark').setup {
-        style = 'darker'
-    }
-    require('onedark').load()
+        require('onedark').setup({ style = 'darker' })
+        require('onedark').load()
 EOF
 else
-    " 1. Load the standard Vim package
+    " Load Vim version
     packadd! onedark-vim
-    
-    " 2. Standard Vim color setup
-    if (has("termguicolors"))
-        set termguicolors
-    endif
     syntax on
     colorscheme onedark
 endif
@@ -38,24 +36,16 @@ set shiftwidth=2
 set expandtab
 set wrap
 set linebreak
-
-" Search improvements
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-
-" Better backspace behavior
 set backspace=indent,eol,start
-
-" Clear search highlighting with Esc
-nnoremap <silent> <Esc> :nohlsearch<CR><Esc>
-
-" Highlight current line
 set cursorline
+set showmatch
+
+" Clear search highlighting
+nnoremap <silent> <Esc> :nohlsearch<CR><Esc>
 
 " Spellcheck for markdown
 autocmd FileType markdown setlocal spell spelllang=en_gb
-
-" Show matching brackets
-set showmatch
