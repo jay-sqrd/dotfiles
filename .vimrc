@@ -1,51 +1,61 @@
-" Set color scheme
-packadd! everforest
+" --- Compatibility Layer ---
+" Make Neovim look into ~/.vim so it can find the packages we cloned
+if has('nvim')
+  set runtimepath+=~/.vim
+endif
 
-"if has('termguicolors')
-"  set termguicolors
-"endif
-set background=dark    " or 'light' for light variant
-colorscheme everforest
+" --- Theme Configuration ---
+if has('nvim')
+    " 1. Load the Neovim-specific package
+    packadd! onedark-nvim
+    
+    " 2. Use Lua to configure the 'darker' variant
+    lua << EOF
+    require('onedark').setup {
+        style = 'darker'
+    }
+    require('onedark').load()
+EOF
+else
+    " 1. Load the standard Vim package
+    packadd! onedark-vim
+    
+    " 2. Standard Vim color setup
+    if (has("termguicolors"))
+        set termguicolors
+    endif
+    syntax on
+    colorscheme onedark
+endif
 
-" syntax higlighting
-syntax on
-
-" Show line numbers
+" --- General Quality of Life ---
+set background=dark
 set number
-
-" Relative line numbers for easier motion commands
 set relativenumber
-
-" Enable auto-indents
 set autoindent
-
-"Set tab width to 2 spaces
 set tabstop=2
 set shiftwidth=2
 set expandtab
-
-" Line wrapping at boundaries
 set wrap
 set linebreak
 
 " Search improvements
-set hlsearch          " Highlight search results
-set incsearch         " Show matches as you type
-set ignorecase        " Case-insensitive search
-set smartcase         " Case-sensitive if uppercase used
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
 
 " Better backspace behavior
 set backspace=indent,eol,start
 
-" Clear search highlighting with Esc in normal mode
+" Clear search highlighting with Esc
 nnoremap <silent> <Esc> :nohlsearch<CR><Esc>
 
 " Highlight current line
 set cursorline
 
-" Spellcheck for markdown GB english
+" Spellcheck for markdown
 autocmd FileType markdown setlocal spell spelllang=en_gb
 
 " Show matching brackets
 set showmatch
-
