@@ -1,41 +1,44 @@
-" --- Path Fixes for Neovim ---
+" --- 1. Path Fixes for Neovim ---
 if has('nvim')
     set runtimepath+=~/.vim
     set packpath+=~/.vim
 endif
 
-" --- 1. Detect Terminal Capabilities ---
-" Check for TrueColor support (standard for modern terminals and macOS Tahoe+)
-let s:has_truecolor = ($COLORTERM == 'truecolor' || $COLORTERM == '24bit' || has('termguicolors'))
+" --- 2. Strict Terminal Capability Detection ---
+" We will only enable TrueColor if we are CERTAIN the terminal supports it.
+" Standard Apple Terminal (Apple_Terminal) usually fails this check.
+let s:is_modern_term = ($COLORTERM == 'truecolor' || $COLORTERM == '24bit' || $ITERM_PROGRAM == 'iTerm.app')
+let s:is_apple_terminal = ($TERM_PROGRAM == 'Apple_Terminal')
 
-" --- 2. Theme Selection Logic ---
-if s:has_truecolor
-    " ADVANCED TERMINAL: Use OneDark
+" --- 3. Theme Selection Logic ---
+if s:is_modern_term && !s:is_apple_terminal
+    " HIGH-END: OneDark (requires TrueColor)
     set termguicolors
-    
     if has('nvim')
-        " Use the Neovim-specific Lua version
         packadd! onedark-nvim
         lua << EOF
             require('onedark').setup({ style = 'darker' })
             require('onedark').load()
 EOF
     else
-        " Use the standard Vimscript version
         packadd! onedark-vim
         syntax on
         colorscheme onedark
     endif
 else
-    " BASIC TERMINAL (Work/Older Macs): Use Everforest
+    " STABLE FALLBACK: Everforest (optimized for 256-color/Apple Terminal)
+    " We explicitly DO NOT 'set termguicolors' here to avoid the blue tint
     packadd! everforest
+    
+    " Everforest config
     let g:everforest_background = 'medium'
     let g:everforest_enable_italic = 1
+    
     syntax on
     colorscheme everforest
 endif
 
-" --- 3. Quality of Life Settings ---
+" --- 4. Quality of Life ---
 set background=dark
 set number
 set relativenumber
@@ -43,18 +46,6 @@ set autoindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
-set wrap
-set linebreak
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-set backspace=indent,eol,start
 set cursorline
-set showmatch
-
-" Clear search highlighting with Esc
+set hlsearch
 nnoremap <silent> <Esc> :nohlsearch<CR><Esc>
-
-" Spellcheck for markdown
-autocmd FileType markdown setlocal spell spelllang=en_gb
