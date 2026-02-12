@@ -1,0 +1,7 @@
+#Machine-specific/ Local overrides
+sway/local.conf
+
+#Cache/ junk
+*.log
+*.swp
+.DS_store

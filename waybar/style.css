@@ -1,0 +1,141 @@
+/* OneDark (darker) merged with openSUSEway defaults */
+
+@define-color bg        rgba(30,33,39,0.86);   /* #1e2127 */
+@define-color surface   rgba(40,44,52,0.92);   /* #282c34 */
+@define-color fg        #abb2bf;
+@define-color muted     #5c6370;
+
+@define-color blue      #61afef;  /* moonlight */
+@define-color purple    #c678dd;  /* wallpaper accent */
+@define-color cyan      #56b6c2;
+@define-color green     #98c379;
+@define-color yellow    #e5c07b;
+@define-color red       #e06c75;
+@define-color grey      #7f848e;
+
+* {
+    border: none;
+    border-radius: 10px;
+    font-family: "Source Code Pro", "FontAwesome 6 Free";
+    font-size: 12px;
+    box-shadow: none;
+    text-shadow: none;
+    transition-duration: 0s;
+    min-height: 0;
+}
+
+window#waybar {
+    color: @fg;
+    background-color: @bg;
+    border-bottom: 2px solid rgba(198,120,221,0.35); /* subtle purple */
+    padding: 4px 8px;
+}
+
+window#waybar.solo {
+    color: @fg;
+}
+
+/* ---- Workspaces ---- */
+#workspaces {
+    margin-right: 6px;
+}
+
+#workspaces button {
+    padding: 0px 5px;
+    margin: 0 3px;
+    color: @muted;
+    background: transparent;
+    border-radius: 6px;
+}
+
+#workspaces button.focused,
+#workspaces button.visible {
+    background: @surface;
+    color: @fg;
+    box-shadow: inset 0 1px 0 0 @purple;
+}
+
+#workspaces button.urgent {
+    background: rgba(224,108,117,0.25);
+    color: @fg;
+    box-shadow: inset 0 2px 0 0 @red;
+}
+
+/* ---- Common module “chips” ---- */
+/* These are the modules you listed in your default CSS */
+#mode,
+#battery,
+#cpu,
+#memory,
+#network,
+#bluetooth,
+#pulseaudio,
+#idle_inhibitor,
+#temperature,
+#custom-layout,
+#custom-scratchpad,
+#backlight,
+#clock,
+#tray {
+    background: @surface;
+    color: @fg;
+    margin: 0px 6px 0px 10px;
+    padding: 0px 2px;
+    border-radius: 6px;
+}
+
+/* Make tray slightly less “blocky” */
+#tray {
+    padding: 2px 8px;
+}
+
+/* ---- Subtle accent underlines by category (optional but nice) ---- */
+#clock      { box-shadow: inset 0 1px 0 0 @purple; }
+#network    { box-shadow: inset 0 1px 0 0 @cyan; }
+#bluetooth  { box-shadow: inset 0 1px 0 0 @blue; }
+#pulseaudio { box-shadow: inset 0 1px 0 0 @blue; }
+#backlight  { box-shadow: inset 0 1px 0 0 @purple; }
+#cpu        { box-shadow: inset 0 1px 0 0 @purple; }
+#memory     { box-shadow: inset 0 1px 0 0 @cyan; }
+#temperature { box-shadow: inset 0 1px 0 0 @blue; }
+#battery    { box-shadow: inset 0 1px 0 0 @cyan; }
+
+/* ---- Battery states ---- */
+#battery.charging  { color: @green; }
+#battery.warning   { color: @yellow; }
+#battery.critical  { color: @red; }
+
+/* ---- Network states (add coverage you didn’t have) ---- */
+#network.disconnected { color: @red; }
+#network.disabled     { color: @muted; }
+
+/* ---- Audio states (add coverage you didn’t have) ---- */
+#pulseaudio.muted { color: @muted; }
+
+/* ---- Bluetooth states ---- */
+#bluetooth.disabled,
+#bluetooth.off {
+    color: @muted;
+}
+
+#bluetooth.connected {
+    color: @blue;
+}
+
+/* ---- Mode indicator ---- */
+#mode {
+    background: rgba(97,175,239,0.18);
+    color: @fg;
+    box-shadow: inset 0 2px 0 0 @blue;
+}
+
+/* ---- Optional: scratchpad chip a little distinct ---- */
+#custom-scratchpad {
+    box-shadow: inset 0 2px 0 0 rgba(198,120,221,0.6);
+}
+
+/* ---- Urgent / attention across bar (if Waybar sets it) ---- */
+window#waybar.urgent {
+    border-bottom: 2px solid rgba(224,108,117,0.7);
+}
+
