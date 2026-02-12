@@ -2,7 +2,7 @@
 
 # Define paths
 VIM_OPT_DIR="$HOME/.vim/pack/themes/opt"
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$HOME/dotfiles/nvim-vim"
 
 # 1. Setup Config Symlinks
 mkdir -p ~/.config/nvim
