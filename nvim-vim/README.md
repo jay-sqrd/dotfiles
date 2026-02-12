@@ -6,7 +6,7 @@ Personal configuration files for Vim/Neovim across macOS and Linux systems.
 
 ```bash
 git clone git@github.com:jay-sqrd/dotfiles.git ~/dotfiles
-cd ~/dotfiles
+cd ~/dotfiles/nvim-vim
 ./install.sh
 ```
 
